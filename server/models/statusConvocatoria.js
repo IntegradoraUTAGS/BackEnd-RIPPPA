@@ -7,6 +7,10 @@ let statusSchema = new Schema({
     strStatus: {
         type: String,
         required: [true, 'Ingresa un status']
+    },
+    blnEstado: {
+        type: Boolean,
+        default: true
     }
 });
 
