@@ -43,10 +43,10 @@ app.get('/statusConvocatoria/:id', (req, res) => {
 
 app.post('/statusConvocatoria', (req, res) => {
     let body = req.body;
-    let statusConvocatoria = new StatusConvocatoria({
-        strStatus: body.nombre,
+    let sConvocatoria = new statusConvocatoria({
+        strStatus: body.strStatus
     });
-    statusConvocatoria.save((err, sConvDB) => {
+    sConvocatoria.save((err, sConvDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
