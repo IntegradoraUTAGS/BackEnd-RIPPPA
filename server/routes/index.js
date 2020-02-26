@@ -4,5 +4,6 @@ const app = express();
 //importar rutas
 app.use(require('./login'));
 app.use(require('./direccion'));
+app.use(require('./statusConvocatoria'));
 
 module.exports = app;
