@@ -9,8 +9,11 @@ let PeriodoSchema = new Schema({
     strPeriodo: {
         type: String,
         required: [true, 'Se debe de ingresar un periodo']
+    },
+    blnEstado: {
+        type: Boolean,
+        default: true
     }
-
 });
 
 PeriodoSchema.plugin(uniqueValidator, {
