@@ -63,7 +63,7 @@ app.post('/menus/registrar', (req, res) => {
 app.put('/menus/actualizar/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['strMenus']);
-    menus.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, menDB) => {
+    menu.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, menDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -81,7 +81,7 @@ app.put('/menus/actualizar/:id', (req, res) => {
 app.delete('/menus/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
-    menus.findByIdAndUpdate(id, { blnEstado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
+    menu.findByIdAndUpdate(id, { blnEstado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
