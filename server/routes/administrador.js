@@ -2,9 +2,11 @@ const express = require('express');
 const Administrador = require('../models/administrador');
 const _ = require('underscore');
 const app = express();
+const bcrypt = require('bcrypt');
+
 
 app.get('/administrador/obtener', (req, res) => {
-    Administrador.find({ estado: true }).populate('idRol').populate('idDireccion') //select * from usuario where estado=true
+    Administrador.find({ blnEstado: true }).populate('idRol').populate('idDireccion') //select * from usuario where estado=true
         //solo aceptan valores numericos
         .exec((err, administradores) => { //ejecuta la funcion
             if (err) {
@@ -20,9 +22,9 @@ app.get('/administrador/obtener', (req, res) => {
             });
         });
 });
-app.get('/administrador/obtener', (req, res) => { 
-    let id= req.params.id;
-    Administrador.find({ _id:id}).populate('idRol').populate('idDireccion') //select * from usuario where estado=true
+app.get('/administrador/obtener', (req, res) => {
+    let id = req.params.id;
+    Administrador.find({ _id: id }).populate('idRol').populate('idDireccion') //select * from usuario where estado=true
         //solo aceptan valores numericos
         .exec((err, administradores) => { //ejecuta la funcion
             if (err) {
@@ -47,10 +49,11 @@ app.post('/administrador/registrar', (req, res) => {
         idDireccion: body.idDireccion,
         strNombre: body.strNombre,
         strCodigoEmpleado: body.strCodigoEmpleado,
-        strContraseña: bcript.hashSync(body.strContraseña, 10),
+        strContraseña: bcrypt.hashSync(body.strContraseña, 10),
         blnEstado: body.blnEstado
     });
     administrador.save((err, admDB) => {
+
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -84,7 +87,7 @@ app.put('/administrador/actualizar/:id', (req, res) => {
 app.delete('/administrador/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
-    Usuario.findByIdAndUpdate(id, { blnEstado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
+    Administrador.findByIdAndUpdate(id, { blnEstado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
