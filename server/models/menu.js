@@ -9,6 +9,10 @@ let MenuSchema = new Schema({
     strMenus: {
         type: String,
         required: [true, 'Se debe de ingresar almenos un menu']
+    },
+    blnEstado: {
+        type: String,
+        default: true
     }
 
 });
