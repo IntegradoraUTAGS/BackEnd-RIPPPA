@@ -1,31 +1,29 @@
 const express = require('express');
 const _ = require('underscore');
 const { verificaToken } = require('../middlewares/autenticacion');
-const menu = require('../models/menu');
+const periodo = require('../models/periodo');
 const app = express();
 
-app.get('/menus/obtener', (req, res) => {
-    menu.find({ blnEstado: true })
-        .exec((err, menus) => {
+app.get('/periodos/obtener', (req, res) => {
+    periodo.find({ blnEstado: true })
+        .exec((err, periodos) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
                     err
                 });
             }
-
             return res.status(200).json({
                 ok: true,
-                count: menus.length,
-                menus
+                count: periodos.length,
+                periodos
             });
         });
 });
-app.get('/menus/obtener/:id', (req, res) => {
+app.get('/periodos/obtener/:id', (req, res) => {
     let id = req.params.id;
-    menu.find({ blnEstado: true, _id: id }) //select * from usuario where estado=true
-        //solo aceptan valores numericos
-        .exec((err, menus) => { //ejecuta la funcion
+    periodo.find({ blnEstado: true, _id: id })
+        .exec((err, periodos) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -35,18 +33,18 @@ app.get('/menus/obtener/:id', (req, res) => {
 
             return res.status(200).json({
                 ok: true,
-                count: menus.length,
-                menus
+                count: periodos.length,
+                periodos
             });
         });
 });
 
-app.post('/menus/registrar', (req, res) => {
+app.post('/periodos/registrar', (req, res) => {
     let body = req.body;
-    let Menu = new menu({
-        strMenus: body.strMenus
+    let Periodo = new periodo({
+        strPeriodo: body.strPeriodo
     });
-    Menu.save((err, men) => {
+    Periodo.save((err, perDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -55,15 +53,15 @@ app.post('/menus/registrar', (req, res) => {
         }
         return res.status(200).json({
             ok: true,
-            men
+            perDB
         });
     });
 });
 
-app.put('/menus/actualizar/:id', (req, res) => {
+app.put('/periodos/actualizar/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['strMenus']);
-    menu.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, menDB) => {
+    let body = _.pick(req.body, ['strPeriodo']);
+    periodo.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, perDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -72,16 +70,16 @@ app.put('/menus/actualizar/:id', (req, res) => {
         }
         return res.status(200).json({
             ok: true,
-            menDB
+            perDB
         });
 
     });
 });
 
-app.delete('/menus/eliminar/:id', (req, res) => {
+app.delete('/periodos/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
-    menu.findByIdAndUpdate(id, { blnEstado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
+    periodo.findByIdAndUpdate(id, { blnEstado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
