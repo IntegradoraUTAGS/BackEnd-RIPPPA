@@ -8,5 +8,6 @@ app.use(require('./administrador'))
 app.use(require('./direccion'));
 app.use(require('./statusConvocatoria'));
 app.use(require('./menu'));
+app.use(require('./periodo'));
 
 module.exports = app;
