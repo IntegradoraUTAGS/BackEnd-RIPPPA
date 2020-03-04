@@ -8,14 +8,6 @@ let Schema = mongoose.Schema;
 let ComentarioSchema = new Schema({
     strComentario: {
         type: String
-    },
-    idAdministrados: {
-        type: Schema.Types.ObjectId,
-        ref: 'Administrador'
-    },
-    idProfesor: {
-        type: Schema.Types.ObjectId,
-        ref: 'Profesor'
     }
 });
 

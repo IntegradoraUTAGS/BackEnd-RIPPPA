@@ -39,6 +39,11 @@ let academiaSchema = new Schema({
     idAutoriza: {
         type: Schema.Types.ObjectId,
         ref: 'Administrador',
+        default: false
+    },
+    blnEstado: {
+        type: Boolean,
+        default: true
     }
 });
 
