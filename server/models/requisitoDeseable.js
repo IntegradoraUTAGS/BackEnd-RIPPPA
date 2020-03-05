@@ -1,18 +1,30 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const Maestria = require('./maestria');
-const oConociminto = require('./otroConocimiento');
+const oConocimiento = require('./otroConocimiento');
 const Herramienta = require('./herramienta');
 
 let Schema = mongoose.Schema;
 
 let RequisitoDeseableSchema = new Schema({
 
-    aJsonMaestria: [Maestria.Schema],
+    arrMaestria: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Maestria',
+        required: [true, 'Por favor ingresar el codigo de la maestria']
+    }],
 
-    aJsonOtrosConocimientos: [oConociminto.Schema],
+    arrOtrosConocimientos: [{
+        type: Schema.Types.ObjectId,
+        ref: 'oConocimiento',
+        required: [true, 'Por favor ingresar el codigo del conocimiento']
+    }],
 
-    aJsonHerramientas: [Herramienta.Schema],
+    arrHerramientas: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Herramienta',
+        required: [true, 'Por favor ingresar el codigo de la herramienta']
+    }],
 
     strNivelIngles: {
         type: String,

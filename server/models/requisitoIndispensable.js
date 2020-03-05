@@ -4,17 +4,27 @@ const Conocimiento = require('./conocimientos');
 const Maestria = require('./maestria');
 const Licenciatura = require('./licenciatura');
 
-
 let Schema = mongoose.Schema;
-
 
 let RequisitoIndispensableSchema = new Schema({
 
-    aJsonLicenciatura: [Licenciatura.Schema],
+    arrLicenciatura: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Licenciatura',
+        required: [true, 'Ingresar el id de la licenciatura']
+    }],
 
-    aJsonMaestria: [Maestria.Schema],
+    arrMaestria: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Maestria',
+        required: [true, 'Ingresar el id de la licenciatura']
+    }],
 
-    aJsonConocimientos: [Conocimiento.Schema],
+    arrConocimientos: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Conocimiento',
+        required: [true, 'Ingresar el id del Conocimiento']
+    }],
 
     numExpProfesional: {
         type: Number,
@@ -24,7 +34,7 @@ let RequisitoIndispensableSchema = new Schema({
     numExpDocentePrevia: {
         type: Number,
         required: [true, 'Favor de ingresar la experiencia profesional']
-    },
+    }
 });
 
 RequisitoIndispensableSchema.plugin(uniqueValidator, {
