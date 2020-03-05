@@ -65,8 +65,8 @@ app.post('/administrador/registrar', (req, res) => {
 });
 app.put('/administrador/actualizar/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['idRol', 'idDireccion', 'strNombre', 'strCodigoEmpleado', 'strContraseña', 'blnEstado']); //FILTRAR del body, on el pick seleccionar los campos que interesan del body 
-    //id 'su coleccion, new -> si no existe lo inserta, runVali-> sirve para validar todas las condiciones del modelo 
+    let body = _.pick(req.body, ['idRol', 'idDireccion', 'strNombre', 'strCodigoEmpleado', 'strContraseña', 'blnEstado']);
+
     Administrador.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, admDB) => {
         if (err) {
             return res.status(400).json({
