@@ -11,7 +11,11 @@ let RolSchema = new Schema({
         required: [true, 'Se debe de ingresar un rol']
     },
 
-    aJsnMenus: ['Menu.Schema']
+    aJsnMenus: [Menu.schema], 
+    blnEstado:{
+        type:Boolean,
+        default: true
+    }
 });
 
 RolSchema.plugin(uniqueValidator, {
