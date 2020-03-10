@@ -66,7 +66,7 @@ app.post('/academia/registrar', (req, res) => {
         const requisitoIndispensable = new RequisitoIndispensable({
             arrLicenciatura: req.body.arrLicenciatura,
             arrMaestria: req.body.arrMaestria,
-            arrConocimento: req.body.arrConocimento,
+            arrConocimientos: req.body.arrConocimientos,
             numExpProfesional: req.body.numExpProfesional,
             numExpDocentePrevia: req.body.numExpDocentePrevia
         });
@@ -154,15 +154,7 @@ app.delete('/academia/eliminar/:id', (req, res) => {
 
 app.put('/academia/actualizar/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, [
-        'idDireccion', 'blnEstado', 'strNombreAcademia',
-        'strEstadoCivil', 'numEdad', 'aJsnRequisitosIndispensables.arrLicenciatura',
-        'aJsnRequisitosIndispensables:arrMaestria',
-        'aJsnRequisitosIndispensables.arrConocimientos',
-        'aJsnRequisitosIndispensables.arrOtrosConocimientos',
-        'numExpProfesional', 'numExpDocentePrevia', 'arrHerramientas',
-        'arrMaestriaExtra', 'strNivelIngles'
-    ]);
+    let body = _.pick(req.body, ['idDireccion', 'blnEstado', 'strNombreAcademia', 'strEstadoCivil', 'numEdad']);
 
     Academia.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, acaDB) => {
         if (err) {
@@ -171,11 +163,76 @@ app.put('/academia/actualizar/:id', (req, res) => {
                 err
             });
         }
-        return res.status(200).json({
-            ok: true,
-            acaDB
+
+        const idAcademia = acaDB._id;
+
+        const requisitoIndispensable = new RequisitoIndispensable({
+            arrLicenciatura: req.body.arrLicenciatura,
+            arrMaestria: req.body.arrMaestria,
+            arrConocimientos: req.body.arrConocimientos,
+            numExpProfesional: req.body.numExpProfesional,
+            numExpDocentePrevia: req.body.numExpDocentePrevia
+        });
+        const requisitoDeseable = new RequisitoDeseable({
+            arrMaestria: req.body.arrMaestriaExtra,
+            arrOtrosConocimientos: req.body.arrOtrosConocimientos,
+            arrHerramientas: req.body.arrHerramientas,
+            strNivelIngles: req.body.strNivelIngles
         });
 
+        let err1 = requisitoIndispensable.validateSync();
+        let err2 = requisitoDeseable.validateSync();
+
+        if (err1) {
+            return res.status(400).json({
+                ok: false,
+                resp: 400,
+                msg: 'Error al intentar registrar los requisitos indispensables.',
+                cont: {
+                    error: Object.keys(err1).length === 0 ? err1.message : err1
+                }
+            });
+        }
+        if (err2) {
+            return res.status(400).json({
+                ok: false,
+                resp: 400,
+                msg: 'Error al intentar registrar los requisitos deseables.',
+                cont: {
+                    error: Object.keys(err2).length === 0 ? err2.message : err2
+                }
+            });
+        }
+
+        Academia.findByIdAndUpdate(idAcademia, {
+            $set: {
+                aJsnRequisitosIndispensables: requisitoIndispensable,
+                aJsnRequisitosDeseables: requisitoDeseable
+            }
+        })
+            .then((academia) => {
+
+                return res.status(200).json({
+                    ok: true,
+                    resp: 200,
+                    msg: 'La respuesta se ha actualizado exitosamente.',
+                    cont: {
+                        academia
+                    }
+                });
+
+            }).catch((err) => {
+
+                return res.status(500).json({
+                    ok: false,
+                    resp: 500,
+                    msg: 'Error al intentar actualizado la academia.',
+                    cont: {
+                        error: Object.keys(err).length === 0 ? err.message : err
+                    }
+                });
+
+            });
     });
 });
 

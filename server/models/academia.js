@@ -27,9 +27,9 @@ let academiaSchema = new Schema({
         required: [true, 'Es necesario que ingrese su edad']
     },
 
-    aJsnRequisitosIndispensables: RequisitoIndispensable.schema,
+    aJsnRequisitosIndispensables: [RequisitoIndispensable.schema],
 
-    aJsnRequisitosDeseables: RequisitoDeseable.schema,
+    aJsnRequisitosDeseables: [RequisitoDeseable.schema],
 
     blnEstado: {
         type: Boolean,

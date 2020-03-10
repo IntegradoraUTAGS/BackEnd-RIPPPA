@@ -46,7 +46,7 @@ let convocatoriaSchema = new Schema({
         type: Number,
         required: [true, 'Favor de ingresar las horas a realizar']
     },
-    aJsnComentario: [Comentario.Schema]
+    aJsnComentario: [Comentario.schema]
 
 });
 
