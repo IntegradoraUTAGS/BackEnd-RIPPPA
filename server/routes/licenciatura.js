@@ -28,6 +28,7 @@ app.post('/licenciatura',  (req, res) => {
     
     });
 
+    
     licenciatura.save((err, licDB) => {
         if (err) {
             return res.status(400).json({
