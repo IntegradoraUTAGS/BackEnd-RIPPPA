@@ -8,6 +8,10 @@ let LicenciaturaSchema = new Schema({
     strLicenciatura: {
         type: String,
         required: [true, 'Se debe de ingresar almenos una licenciatura']
+    },
+    disponible:{
+        type:Boolean,
+        default:true
     }
 
 });
