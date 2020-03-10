@@ -6,9 +6,8 @@ const bcrypt = require('bcrypt');
 
 
 app.get('/administrador/obtener', (req, res) => {
-    Administrador.find({ blnEstado: true }).populate('idRol').populate('idDireccion') //select * from usuario where estado=true
-        //solo aceptan valores numericos
-        .exec((err, administradores) => { //ejecuta la funcion
+    Administrador.find({ blnEstado: true }).populate('idRol').populate('idDireccion')
+        .exec((err, administradores) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -24,9 +23,8 @@ app.get('/administrador/obtener', (req, res) => {
 });
 app.get('/administrador/obtener', (req, res) => {
     let id = req.params.id;
-    Administrador.find({ _id: id }).populate('idRol').populate('idDireccion') //select * from usuario where estado=true
-        //solo aceptan valores numericos
-        .exec((err, administradores) => { //ejecuta la funcion
+    Administrador.find({ _id: id }).populate('idRol').populate('idDireccion')
+        .exec((err, administradores) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -44,7 +42,6 @@ app.get('/administrador/obtener', (req, res) => {
 app.post('/administrador/registrar', (req, res) => {
     let body = req.body;
     let administrador = new Administrador({
-        //para poder mandar los datos a la coleccion
         idRol: body.idRol,
         idDireccion: body.idDireccion,
         strNombre: body.strNombre,
@@ -68,8 +65,8 @@ app.post('/administrador/registrar', (req, res) => {
 });
 app.put('/administrador/actualizar/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['idRol', 'idDireccion', 'strNombre', 'strCodigoEmpleado', 'strContraseña', 'blnEstado']); //FILTRAR del body, on el pick seleccionar los campos que interesan del body 
-    //id 'su coleccion, new -> si no existe lo inserta, runVali-> sirve para validar todas las condiciones del modelo 
+    let body = _.pick(req.body, ['idRol', 'idDireccion', 'strNombre', 'strCodigoEmpleado', 'strContraseña', 'blnEstado']);
+
     Administrador.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, admDB) => {
         if (err) {
             return res.status(400).json({

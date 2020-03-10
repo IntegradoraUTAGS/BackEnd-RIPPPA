@@ -1,29 +1,31 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
-const Academia = require('./academia');
-const RequisitoIndispensable = require('./requisitoIndispensable');
+const Maestria = require('./maestria');
+const oConocimiento = require('./otroConocimiento');
+const Herramienta = require('./herramienta');
 
 let Schema = mongoose.Schema;
 
-
 let RequisitoDeseableSchema = new Schema({
 
-    aJsonMaestria: [{
-        idMaestrias: {
-            type: Schema.Types.ObjectId,
-            ref: 'RequisitoIndispensable'
-        }
+    arrMaestria: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Maestria',
+        required: [true, 'Por favor ingresar el codigo de la maestria']
     }],
-    aJsonOtrosConocimientos: [{
-        strOtrosConocimientos: {
-            type: String
-        }
+
+    arrOtrosConocimientos: [{
+        type: Schema.Types.ObjectId,
+        ref: 'oConocimiento',
+        required: [true, 'Por favor ingresar el codigo del conocimiento']
     }],
-    aJsonHerramientas: [{
-        strHerramientas: {
-            type: String,
-        }
+
+    arrHerramientas: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Herramienta',
+        required: [true, 'Por favor ingresar el codigo de la herramienta']
     }],
+
     strNivelIngles: {
         type: String,
         required: [true, 'Favor de agregar nivel de ingles']

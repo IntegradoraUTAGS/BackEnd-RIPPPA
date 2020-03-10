@@ -12,7 +12,7 @@ let academiaSchema = new Schema({
     idDireccion: {
         type: Schema.Types.ObjectId,
         ref: 'Direccion',
-        required: [true, 'Ingresar el id de la dirección']
+
     },
     strNombreAcademia: {
         type: String,
@@ -27,18 +27,13 @@ let academiaSchema = new Schema({
         required: [true, 'Es necesario que ingrese su edad']
     },
 
-    aJsnRequisitosIndispensables: [RequisitoIndispensable.Schema],
+    aJsnRequisitosIndispensables: RequisitoIndispensable.schema,
 
-    aJsonRequisitosDeseables: [RequisitoDeseable.Schema],
+    aJsnRequisitosDeseables: RequisitoDeseable.schema,
 
-    idElabora: {
-        type: Schema.Types.ObjectId,
-        ref: 'Administrador',
-        required: [true, 'Ingresar el id del usuario actual']
-    },
-    idAutoriza: {
-        type: Schema.Types.ObjectId,
-        ref: 'Administrador',
+    blnEstado: {
+        type: Boolean,
+        default: true
     }
 });
 
