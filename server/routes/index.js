@@ -4,13 +4,13 @@ const app = express();
 //importar rutas
 
 app.use(require('./login'));
-app.use(require('./administrador'))
-app.use(require('./direccion'));
-app.use(require('./statusConvocatoria'));
-app.use(require('./menu'));
-app.use(require('./periodo'));
-app.use(require('./academias'))
-app.use(require('./licenciatura'));
-app.use(require('./rol'));
+app.use('/administrador', require('./administrador'))
+app.use('/direccion', require('./direccion'));
+app.use('/statusConvocatoria', require('./statusConvocatoria'));
+app.use('/menu', require('./menu'));
+app.use('/periodo', require('./periodo'));
+app.use('/academias', require('./academias'))
+app.use('/licenciatura', require('./licenciatura'));
+app.use('/rol', require('./rol'));
 
 module.exports = app;

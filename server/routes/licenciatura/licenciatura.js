@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
 const _ = require('underscore');
-const Licenciatura= require('../models/licenciatura');
+const Licenciatura = require('../../models/licenciatura');
 
-app.get('/licenciatura',  (req, res) => {
+app.get('/obtener', (req, res) => {
     Licenciatura.find()
         .exec((err, licenciaturas) => {
             if (err) {
@@ -19,16 +19,16 @@ app.get('/licenciatura',  (req, res) => {
             })
         });
 });
-app.post('/licenciatura',  (req, res) => {
+app.post('/registrar', (req, res) => {
     let body = req.body;
 
     let licenciatura = new Licenciatura({
         strLicenciatura: body.strLicenciatura
-        
-    
+
+
     });
 
-    
+
     licenciatura.save((err, licDB) => {
         if (err) {
             return res.status(400).json({
@@ -42,7 +42,7 @@ app.post('/licenciatura',  (req, res) => {
         });
     });
 });
-app.put('/licenciatura/:id',  (req, res) => {
+app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['strLicenciatura']);
 
@@ -60,7 +60,7 @@ app.put('/licenciatura/:id',  (req, res) => {
         }
     });
 });
-app.delete('/licencatura/:id', (req, res) => {
+app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
     Licenciatura.findByIdAndUpdate(id, { disponible: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
@@ -76,4 +76,4 @@ app.delete('/licencatura/:id', (req, res) => {
         });
     });
 });
-module.exports=app;
+module.exports = app;

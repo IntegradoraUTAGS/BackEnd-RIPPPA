@@ -1,10 +1,10 @@
 const express = require('express');
 const _ = require('underscore');
-const { verificaToken } = require('../middlewares/autenticacion');
-const statusConvocatoria = require('../models/statusConvocatoria');
+const { verificaToken } = require('../../middlewares/autenticacion');
+const statusConvocatoria = require('../../models/statusConvocatoria');
 const app = express();
 
-app.get('/statusConvocatoria', (req, res) => {
+app.get('/obtener', (req, res) => {
     statusConvocatoria.find({ blnEstado: true })
         .exec((err, convocatorias) => {
             if (err) {
@@ -21,7 +21,7 @@ app.get('/statusConvocatoria', (req, res) => {
             });
         });
 });
-app.get('/statusConvocatoria/:id', (req, res) => {
+app.get('/obtener/:id', (req, res) => {
     let id = req.params.id;
     statusConvocatoria.find({ blnEstado: true, _id: id }) //select * from usuario where estado=true
         //solo aceptan valores numericos
@@ -41,7 +41,7 @@ app.get('/statusConvocatoria/:id', (req, res) => {
         });
 });
 
-app.post('/statusConvocatoria', (req, res) => {
+app.post('/registrar', (req, res) => {
     let body = req.body;
     let sConvocatoria = new statusConvocatoria({
         strStatus: body.strStatus
@@ -60,7 +60,7 @@ app.post('/statusConvocatoria', (req, res) => {
     });
 });
 
-app.put('/statusConvocatoria/:id', (req, res) => {
+app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['strStatus']);
     statusConvocatoria.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, sConvDB) => {
@@ -78,7 +78,7 @@ app.put('/statusConvocatoria/:id', (req, res) => {
     });
 });
 
-app.delete('/statusConvocatoria/:id', (req, res) => {
+app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
     statusConvocatoria.findByIdAndUpdate(id, { blnEstado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
