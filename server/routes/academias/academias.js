@@ -1,12 +1,12 @@
 const express = require('express');
 const _ = require('underscore');
-const { verificaToken } = require('../middlewares/autenticacion');
-const Academia = require('../models/academia');
-const RequisitoIndispensable = require('../models/requisitoIndispensable');
-const RequisitoDeseable = require('../models/requisitoDeseable');
+const { verificaToken } = require('../../middlewares/autenticacion');
+const Academia = require('../../models/academia');
+const RequisitoIndispensable = require('../../models/requisitoIndispensable');
+const RequisitoDeseable = require('../../models/requisitoDeseable');
 const app = express();
 
-app.get('/academias/obtener', (req, res) => {
+app.get('/obtener', (req, res) => {
     Academia.find({ blnEstado: true })
         .exec((err, academias) => {
             if (err) {
@@ -23,7 +23,7 @@ app.get('/academias/obtener', (req, res) => {
             });
         });
 });
-app.get('/academias/obtener/:id', (req, res) => {
+app.get('/obtener/:id', (req, res) => {
     let id = req.params.id;
     Academia.find({ blnEstado: true, _id: id })
 
@@ -44,7 +44,7 @@ app.get('/academias/obtener/:id', (req, res) => {
 });
 
 
-app.post('/academia/registrar', (req, res) => {
+app.post('/registrar', (req, res) => {
 
     let body = req.body;
     let academias = new Academia({
@@ -135,7 +135,7 @@ app.post('/academia/registrar', (req, res) => {
 
 });
 
-app.delete('/academia/eliminar/:id', (req, res) => {
+app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
     Academia.findByIdAndUpdate(id, { blnEstado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
@@ -152,7 +152,7 @@ app.delete('/academia/eliminar/:id', (req, res) => {
     });
 });
 
-app.put('/academia/actualizar/:id', (req, res) => {
+app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['idDireccion', 'blnEstado', 'strNombreAcademia', 'strEstadoCivil', 'numEdad']);
 

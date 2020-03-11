@@ -1,10 +1,10 @@
 const express = require('express');
 const _ = require('underscore');
-const { verificaToken } = require('../middlewares/autenticacion');
-const periodo = require('../models/periodo');
+const { verificaToken } = require('../../middlewares/autenticacion');
+const periodo = require('../../models/periodo');
 const app = express();
 
-app.get('/periodos/obtener', (req, res) => {
+app.get('/obtener', (req, res) => {
     periodo.find({ blnEstado: true })
         .exec((err, periodos) => {
             if (err) {
@@ -20,7 +20,7 @@ app.get('/periodos/obtener', (req, res) => {
             });
         });
 });
-app.get('/periodos/obtener/:id', (req, res) => {
+app.get('/obtener/:id', (req, res) => {
     let id = req.params.id;
     periodo.find({ blnEstado: true, _id: id })
         .exec((err, periodos) => {
@@ -39,7 +39,7 @@ app.get('/periodos/obtener/:id', (req, res) => {
         });
 });
 
-app.post('/periodos/registrar', (req, res) => {
+app.post('/registrar', (req, res) => {
     let body = req.body;
     let Periodo = new periodo({
         strPeriodo: body.strPeriodo
@@ -58,7 +58,7 @@ app.post('/periodos/registrar', (req, res) => {
     });
 });
 
-app.put('/periodos/actualizar/:id', (req, res) => {
+app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['strPeriodo']);
     periodo.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, perDB) => {
@@ -76,7 +76,7 @@ app.put('/periodos/actualizar/:id', (req, res) => {
     });
 });
 
-app.delete('/periodos/eliminar/:id', (req, res) => {
+app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
     periodo.findByIdAndUpdate(id, { blnEstado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {

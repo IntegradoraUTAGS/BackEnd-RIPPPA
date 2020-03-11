@@ -1,11 +1,12 @@
 const express = require('express');
-const Administrador = require('../models/administrador');
+const jwt = require('jsonwebtoken');
+const Administrador = require('../../models/administrador');
 const _ = require('underscore');
 const app = express();
 const bcrypt = require('bcrypt');
 
 
-app.get('/administrador/obtener', (req, res) => {
+app.get('/obtener', (req, res) => {
     Administrador.find({ blnEstado: true }).populate('idRol').populate('idDireccion')
         .exec((err, administradores) => {
             if (err) {
@@ -21,7 +22,7 @@ app.get('/administrador/obtener', (req, res) => {
             });
         });
 });
-app.get('/administrador/obtener', (req, res) => {
+app.get('/obtener/:id', (req, res) => {
     let id = req.params.id;
     Administrador.find({ _id: id }).populate('idRol').populate('idDireccion')
         .exec((err, administradores) => {
@@ -39,7 +40,7 @@ app.get('/administrador/obtener', (req, res) => {
             });
         });
 });
-app.post('/administrador/registrar', (req, res) => {
+app.post('/registrar', (req, res) => {
     let body = req.body;
     let administrador = new Administrador({
         idRol: body.idRol,
@@ -63,7 +64,7 @@ app.post('/administrador/registrar', (req, res) => {
         });
     });
 });
-app.put('/administrador/actualizar/:id', (req, res) => {
+app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['idRol', 'idDireccion', 'strNombre', 'strCodigoEmpleado', 'strContraseña', 'blnEstado']);
 
@@ -81,7 +82,7 @@ app.put('/administrador/actualizar/:id', (req, res) => {
 
     });
 });
-app.delete('/administrador/eliminar/:id', (req, res) => {
+app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
     Administrador.findByIdAndUpdate(id, { blnEstado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
@@ -94,6 +95,47 @@ app.delete('/administrador/eliminar/:id', (req, res) => {
         return res.status(200).json({
             ok: true,
             resp
+        });
+    });
+});
+
+app.post('/login', (req, res) => {
+    let body = req.body;
+
+    Administrador.findOne({ strCodigoEmpleado: body.strCodigoEmpleado }, (err, admDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!admDB) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Usuario y/o contraseña incorrecta o el usuario no tiene permisos'
+                }
+            });
+        }
+
+        if (!bcrypt.compareSync(body.strContraseña, admDB.strContraseña)) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Usuario y/o contraseña incorrecta o el usuario no tiene permisos'
+                }
+            });
+        }
+
+        let token = jwt.sign({
+            administrador: admDB
+        }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
+
+        return res.status(200).json({
+            ok: true,
+            administrador: admDB,
+            token
         });
     });
 });
