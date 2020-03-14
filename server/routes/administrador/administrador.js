@@ -46,8 +46,8 @@ app.post('/registrar', (req, res) => {
         idRol: body.idRol,
         idDireccion: body.idDireccion,
         strNombre: body.strNombre,
-        strCodigoEmpleado: body.strCodigoEmpleado,
-        strContraseña: bcrypt.hashSync(body.strContraseña, 10),
+        numCodigoEmpleado: body.numCodigoEmpleado,
+        strContrasenia: bcrypt.hashSync(body.strContrasenia, 10),
         blnEstado: body.blnEstado
     });
     administrador.save((err, admDB) => {
@@ -66,7 +66,7 @@ app.post('/registrar', (req, res) => {
 });
 app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['idRol', 'idDireccion', 'strNombre', 'strCodigoEmpleado', 'strContraseña', 'blnEstado']);
+    let body = _.pick(req.body, ['idRol', 'idDireccion', 'strNombre', 'numCodigoEmpleado', 'strContrasenia', 'blnEstado']);
 
     Administrador.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, admDB) => {
         if (err) {
@@ -102,7 +102,7 @@ app.delete('/eliminar/:id', (req, res) => {
 app.post('/login', (req, res) => {
     let body = req.body;
 
-    Administrador.findOne({ strCodigoEmpleado: body.strCodigoEmpleado }, (err, admDB) => {
+    Administrador.findOne({ numCodigoEmpleado: body.numCodigoEmpleado }, (err, admDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -119,7 +119,7 @@ app.post('/login', (req, res) => {
             });
         }
 
-        if (!bcrypt.compareSync(body.strContraseña, admDB.strContraseña)) {
+        if (!bcrypt.compareSync(body.strContrasenia, admDB.strContrasenia)) {
             return res.status(400).json({
                 ok: false,
                 err: {

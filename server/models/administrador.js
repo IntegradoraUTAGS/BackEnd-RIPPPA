@@ -20,13 +20,13 @@ let administradorSchema = new Schema({
         type: String,
         required: [true, 'Por favor ingresar el nombre del usuario']
     },
-    strCodigoEmpleado: {
-        type: String,
+    numCodigoEmpleado: {
+        type: Number,
         required: [true, 'Por favor ingresar el codigo de empleado'],
         unique: true
 
     },
-    strContraseña: {
+    strContrasenia: {
         type: String,
         required: [true, 'Por favor ingresar la contraseña']
     },
