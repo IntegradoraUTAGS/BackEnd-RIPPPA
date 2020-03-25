@@ -6,6 +6,10 @@ let Schema = mongoose.Schema;
 let HerramientaSchema = new Schema({
     strHerramientas: {
         type: String,
+    },
+    blnStatus: {
+        type: Boolean,
+        default: true
     }
 });
 

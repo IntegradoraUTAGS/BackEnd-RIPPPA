@@ -86,9 +86,6 @@ let profesorSchema = new Schema({
     blnCumpleReqDeseables: {
         type: Boolean,
         default: false
-    },
-    strComentario: {
-        type: String
     }
 });
 

@@ -7,7 +7,7 @@ const RequisitoDeseable = require('../../models/requisitoDeseable');
 const app = express();
 
 app.get('/obtener', (req, res) => {
-    Academia.find({ blnEstado: true })
+    Academia.find({ blnEstado: true }).populate('idDireccion')
         .exec((err, academias) => {
             if (err) {
                 return res.status(400).json({
@@ -25,7 +25,7 @@ app.get('/obtener', (req, res) => {
 });
 app.get('/obtener/:id', (req, res) => {
     let id = req.params.id;
-    Academia.find({ blnEstado: true, _id: id })
+    Academia.find({ blnEstado: true, _id: id }).populate('idDireccion')
 
         .exec((err, academias) => {
             if (err) {

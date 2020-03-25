@@ -6,6 +6,7 @@ const Profesor = require('./profesor');
 const Administrador = require('./administrador');
 const Status = require('./statusConvocatoria');
 const Periodo = require('./periodo');
+const Comentario = require('./comentario');
 
 let Schema = mongoose.Schema;
 
@@ -15,10 +16,6 @@ let convocatoriaSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Direccion',
         required: [true, 'Ingresar el id de la dirección']
-    },
-    idProfesor: {
-        type: Schema.Types.ObjectId,
-        ref: 'Profesor'
     },
     idAcademia: {
         type: Schema.Types.ObjectId,
@@ -46,7 +43,10 @@ let convocatoriaSchema = new Schema({
         type: Number,
         required: [true, 'Favor de ingresar las horas a realizar']
     },
-    aJsnComentario: [Comentario.schema]
+    idComentario: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Comentario'
+    }]
 
 });
 

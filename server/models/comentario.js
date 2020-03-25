@@ -5,7 +5,7 @@ const Profesor = require('./profesor');
 
 let Schema = mongoose.Schema;
 
-let ComentarioSchema = new Schema({
+let comentarioSchema = new Schema({
     strComentario: {
         type: String
     },
@@ -23,8 +23,8 @@ let ComentarioSchema = new Schema({
     }
 });
 
-ComentarioSchema.plugin(uniqueValidator, {
+comentarioSchema.plugin(uniqueValidator, {
     message: '{PATH} Debe ser único y diferente'
 });
 
-module.exports = mongoose.model('Comentario', ComentarioSchema);
+module.exports = mongoose.model('Comentario', comentarioSchema);

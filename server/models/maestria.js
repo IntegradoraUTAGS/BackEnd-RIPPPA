@@ -7,6 +7,10 @@ let MaestriaSchema = new Schema({
 
     strMaestria: {
         type: String
+    },
+    blnStatus: {
+        type: Boolean,
+        default: true
     }
 
 });

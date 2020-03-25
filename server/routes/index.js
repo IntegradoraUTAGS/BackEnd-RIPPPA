@@ -12,5 +12,8 @@ app.use('/academias', require('./academias/academias'));
 app.use('/licenciatura', require('./licenciatura/licenciatura'));
 app.use('/rol', require('./rol/rol'));
 app.use('/comentario', require('./comentario/comentario'));
+app.use('/maestria', require('./maestria/maestria'));
+app.use('/conocimiento', require('./conocimiento/conocimiento'));
+app.use('/herramienta', require('./herramienta/herramienta'));
 
 module.exports = app;

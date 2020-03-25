@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
+const jwt = require('jsonwebtoken');
 const Rol = require('./rol');
 const Direccion = require('./direccion');
 

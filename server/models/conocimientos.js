@@ -8,6 +8,10 @@ let ConocimientoSchema = new Schema({
     strConocimientos: {
         type: String,
         required: [true, 'Se debe de ingresar almenos un conocimiento']
+    },
+    blnStatus: {
+        type: Boolean,
+        default: true
     }
 
 });
