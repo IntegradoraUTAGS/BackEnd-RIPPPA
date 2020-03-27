@@ -12,7 +12,7 @@ let academiaSchema = new Schema({
     idDireccion: {
         type: Schema.Types.ObjectId,
         ref: 'Direccion',
-
+        required: true
     },
     strNombreAcademia: {
         type: String,

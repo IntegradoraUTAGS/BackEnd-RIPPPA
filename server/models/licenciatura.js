@@ -9,9 +9,9 @@ let LicenciaturaSchema = new Schema({
         type: String,
         required: [true, 'Se debe de ingresar almenos una licenciatura']
     },
-    disponible:{
-        type:Boolean,
-        default:true
+    blnDisponible: {
+        type: Boolean,
+        default: true
     }
 
 });

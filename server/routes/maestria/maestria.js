@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
 const _ = require('underscore');
-const Licenciatura = require('../../models/licenciatura');
+const Maestria = require('../../models/maestria');
 
 app.get('/obtener', (req, res) => {
-    Licenciatura.find({ blnDisponible: true })
-        .exec((err, licenciaturas) => {
+    Maestria.find({ blnStatus: true })
+        .exec((err, maestrias) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -14,38 +14,20 @@ app.get('/obtener', (req, res) => {
             }
             return res.status(200).json({
                 ok: true,
-                cont: licenciaturas
+                count: maestrias.length,
+                maestrias
             })
         });
 });
-
-app.get('/obtener/:id', (req, res) => {
-
-    Licenciatura.find({ blnDisponible: true, _id: req.params.id }).then((licenciatura) => {
-
-        return res.status(200).json({
-            msg: 'Licenciatura consultada',
-            cont: licenciatura
-        });
-
-    }).catch((err) => {
-        return res.status(500).json({
-            msg: 'Erro al obtener la licenciatura de la DB.',
-            cont: err
-        });
-    });
-
-});
-
 app.post('/registrar', (req, res) => {
     let body = req.body;
 
-    let licenciatura = new Licenciatura({
-        strLicenciatura: body.strLicenciatura
+    let maestria = new Maestria({
+        strMaestria: body.strMaestria
     });
 
 
-    licenciatura.save((err, licDB) => {
+    maestria.save((err, maesDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -54,16 +36,15 @@ app.post('/registrar', (req, res) => {
         }
         return res.status(200).json({
             ok: true,
-            msg: "La licenciatura se ha agregado correctamente",
-            licDB
+            maesDB
         });
     });
 });
 app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['strLicenciatura']);
+    let body = _.pick(req.body, ['strMaestria']);
 
-    Licenciatura.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, licDB) => {
+    Maestria.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, maeDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -72,7 +53,7 @@ app.put('/actualizar/:id', (req, res) => {
         } else {
             return res.status(200).json({
                 ok: true,
-                licDB
+                maeDB
             });
         }
     });
@@ -80,7 +61,7 @@ app.put('/actualizar/:id', (req, res) => {
 app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
-    Licenciatura.findByIdAndUpdate(id, { blnDisponible: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
+    Maestria.findByIdAndUpdate(id, { blnStatus: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -89,7 +70,6 @@ app.delete('/eliminar/:id', (req, res) => {
         }
         return res.status(200).json({
             ok: true,
-            msg: "Se ha eliminado correctamente la licenciatura",
             resp
         });
     });

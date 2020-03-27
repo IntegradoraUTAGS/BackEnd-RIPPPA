@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-
 let Schema = mongoose.Schema;
 
 let MenuSchema = new Schema({
@@ -11,10 +10,9 @@ let MenuSchema = new Schema({
         required: [true, 'Se debe de ingresar almenos un menu']
     },
     blnEstado: {
-        type: String,
+        type: Boolean,
         default: true
     }
-
 });
 
 MenuSchema.plugin(uniqueValidator, {
