@@ -13,10 +13,6 @@ let comentarioSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Administrador'
     },
-    idProfesor: {
-        type: Schema.Types.ObjectId,
-        ref: 'Profesor'
-    },
     blnEstado: {
         type: Boolean,
         default: true

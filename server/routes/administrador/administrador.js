@@ -47,8 +47,7 @@ app.post('/registrar', (req, res) => {
         idDireccion: body.idDireccion,
         strNombre: body.strNombre,
         numCodigoEmpleado: body.numCodigoEmpleado,
-        strContrasenia: bcrypt.hashSync(body.strContrasenia, 10),
-        blnEstado: body.blnEstado
+        strContrasenia: bcrypt.hashSync(body.strContrasenia, 10)
     });
     administrador.save((err, admDB) => {
 

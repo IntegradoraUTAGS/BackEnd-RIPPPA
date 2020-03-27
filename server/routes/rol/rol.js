@@ -63,7 +63,7 @@ app.post('/insertar', (req, res) => {
         const idRol = rolDB._id;
 
         const menus = new Menu({
-            strMenus: req.body.aJsnMenus
+            strMenus: req.body.strMenus
         });
 
         let err1 = menus.validateSync();

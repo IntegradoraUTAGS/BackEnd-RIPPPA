@@ -11,9 +11,10 @@ let RolSchema = new Schema({
         required: [true, 'Se debe de ingresar un rol']
     },
 
-    aJsnMenus: [Menu.schema], 
-    blnEstado:{
-        type:Boolean,
+    aJsnMenus: [Menu.schema],
+
+    blnEstado: {
+        type: Boolean,
         default: true
     }
 });
