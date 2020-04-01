@@ -42,11 +42,7 @@ let convocatoriaSchema = new Schema({
     numHoras: {
         type: Number,
         required: [true, 'Favor de ingresar las horas a realizar']
-    },
-    idComentario: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Comentario'
-    }]
+    }
 
 });
 
