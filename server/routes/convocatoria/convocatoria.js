@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const _ = require('underscore');
-const Convocatoria = require('../models/convocatoria');
+const Convocatoria = require('../../models/convocatoria');
 
 app.get('/convocatoria', (req, res) => {
     Convocatoria.find()
