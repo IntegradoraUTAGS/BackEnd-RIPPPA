@@ -21,7 +21,7 @@ app.get('/obtener', (req, res) => {
 
 app.get('/obtener/:id', (req, res) => {
 
-    Licenciatura.find({ blnDisponible: true, _id: req.params.id }).then((licenciatura) => {
+    Licenciatura.findById({ blnDisponible: true, _id: req.params.id }).then((licenciatura) => {
 
         return res.status(200).json({
             msg: 'Licenciatura consultada',

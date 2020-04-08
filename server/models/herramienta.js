@@ -4,10 +4,10 @@ const uniqueValidator = require('mongoose-unique-validator');
 let Schema = mongoose.Schema;
 
 let HerramientaSchema = new Schema({
-    strHerramientas: {
+    strHerramienta: {
         type: String,
     },
-    blnStatus: {
+    blnDisponible: {
         type: Boolean,
         default: true
     }
