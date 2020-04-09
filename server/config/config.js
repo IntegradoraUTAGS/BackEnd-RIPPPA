@@ -4,9 +4,9 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 //Coneccion a base de datos
 let urlDB;
 if (process.env.NODE_ENV === 'dev') {
-    urlDB = 'mongodb://localhost:27017/RIPPPA';
+    urlDB = 'mongodb+srv://root:ripppa123@cluster0-y1g0q.mongodb.net/RIPPPA';
 } else {
-    urlDB = ''; //PENDIENTE*************
+    urlDB = 'mongodb+srv://root:ripppa123@cluster0-y1g0q.mongodb.net/RIPPPA';
 }
 process.env.URLDB = urlDB;
 //FIRMA DE JASON WEB TOKEN
