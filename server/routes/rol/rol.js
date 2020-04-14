@@ -48,62 +48,27 @@ app.post('/insertar', (req, res) => {
     let body = req.body;
 
     let rol = new Rol({
+        idMenu: body.idMenu,
         strRoles: body.strRoles
     });
 
-    new Rol(rol).save((err, rolDB) => {
+    rol.save((err, rolDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
                 err
             });
-
         }
-
-        const idRol = rolDB._id;
-
-        const menus = new Menu({
-            strMenus: req.body.strMenus
+        return res.status(200).json({
+            ok: true,
+            rolDB
         });
-
-        let err1 = menus.validateSync();
-
-        if (err1) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'Error al registrar el menu'
-            });
-        }
-
-        Rol.findByIdAndUpdate(idRol, {
-            $push: {
-                aJsnMenus: menus
-            }
-        })
-            .then((roles) => {
-                return res.status(200).json({
-                    ok: true,
-                    resp: 200,
-                    msg: 'Registrar el rol exitoso',
-                    roles
-                });
-            })
-            .catch((err) => {
-                return res.status(500).json({
-                    ok: false,
-                    resp: 500,
-                    msg: 'Error al intentar registrar la academia',
-                    err
-                });
-            });
     });
 });
 
 app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['idRol', 'strRoles']); //FILTRAR del body, on el pick seleccionar los campos que interesan del body 
-    //id 'su coleccion, new -> si no existe lo inserta, runVali-> sirve para validar todas las condiciones del modelo 
-    Rol.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, rolDB) => {
+    let body = _.pick(req.body, ['idMenu', 'strRoles']); Rol.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, rolDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
