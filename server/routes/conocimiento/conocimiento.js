@@ -4,7 +4,7 @@ const _ = require('underscore');
 const Conocimiento = require('../../models/conocimientos');
 
 app.get('/obtener', (req, res) => {
-    Conocimiento.find({ blnStatus: true })
+    Conocimiento.find({ blnDisponible: true })
         .exec((err, conocimientos) => {
             if (err) {
                 return res.status(400).json({
@@ -19,6 +19,25 @@ app.get('/obtener', (req, res) => {
             })
         });
 });
+
+app.get('/obtener/:id', (req, res) => {
+
+    Conocimiento.findById({ blnDisponible: true, _id: req.params.id }).then((conocimiento) => {
+
+        return res.status(200).json({
+            msg: 'Conocimiento consultado',
+            conocimiento
+        });
+
+    }).catch((err) => {
+        return res.status(500).json({
+            msg: 'Error al obtener el conocimiento de la DB.',
+            cont: err
+        });
+    });
+
+});
+
 app.post('/registrar', (req, res) => {
     let body = req.body;
 
@@ -61,7 +80,7 @@ app.put('/actualizar/:id', (req, res) => {
 app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
-    Conocimiento.findByIdAndUpdate(id, { blnStatus: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
+    Conocimiento.findByIdAndUpdate(id, { blnDisponible: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
