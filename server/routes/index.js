@@ -16,5 +16,6 @@ app.use('/maestria', require('./maestria/maestria'));
 app.use('/conocimiento', require('./conocimiento/conocimiento'));
 app.use('/herramienta', require('./herramienta/herramienta'));
 app.use('/convocatoria', require('./convocatoria/convocatoria'))
+app.use('/oconocimiento', require('./otrosConocimientos/otrosConocimientos'))
 
 module.exports = app;
