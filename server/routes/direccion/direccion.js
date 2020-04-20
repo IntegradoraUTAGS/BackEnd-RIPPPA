@@ -5,7 +5,7 @@ const Direcciones = require('../../models/direccion');
 const app = express();
 
 app.get('/obtener', (req, res) => {
-    Direcciones.find({ blnEstado: true }).exec((err, direcciones) => {
+    Direcciones.find({ blnDisponible: true }).exec((err, direcciones) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -21,8 +21,8 @@ app.get('/obtener', (req, res) => {
 });
 app.get('/obtener/:id', (req, res) => {
     let id = req.params.id;
-    Direcciones.find({ blnEstado: true, _id: id })
-        .exec((err, direcciones) => {
+    Direcciones.findById({ blnDisponible: true, _id: id })
+        .exec((err, dir) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -32,10 +32,12 @@ app.get('/obtener/:id', (req, res) => {
 
             return res.status(200).json({
                 ok: true,
-                count: direcciones.length,
-                direcciones
+                dir
             });
+
+
         });
+
 });
 
 app.post('/registrar', (req, res) => {
@@ -78,7 +80,7 @@ app.put('/actualizar/:id', (req, res) => {
 app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
-    Direcciones.findByIdAndUpdate(id, { blnEstado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
+    Direcciones.findByIdAndUpdate(id, { blnDisponible: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
         if (err) {
             return res.status(400).json({
                 ok: false,

@@ -9,7 +9,7 @@ let direccionSchema = new Schema({
         type: String,
         required: [true, 'Porfavor ingresar el nombre de la dirección']
     },
-    blnEstado: {
+    blnDisponible: {
         type: Boolean,
         default: true
     }

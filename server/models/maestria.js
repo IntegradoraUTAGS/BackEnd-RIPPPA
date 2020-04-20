@@ -8,7 +8,7 @@ let MaestriaSchema = new Schema({
     strMaestria: {
         type: String
     },
-    blnStatus: {
+    blnDisponible: {
         type: Boolean,
         default: true
     }
