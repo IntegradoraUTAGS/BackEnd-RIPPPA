@@ -7,6 +7,10 @@ let oConocimientoSchema = new Schema({
 
     strOtrosConocimientos: {
         type: String
+    },
+    blnDisponible: {
+        type: Boolean,
+        default: true
     }
 
 });
