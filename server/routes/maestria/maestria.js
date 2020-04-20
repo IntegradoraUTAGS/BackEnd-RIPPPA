@@ -3,8 +3,10 @@ const app = express();
 const _ = require('underscore');
 const Maestria = require('../../models/maestria');
 
+//Este get obtiene todas las mestrias que esten activas
+
 app.get('/obtener', (req, res) => {
-    Maestria.find({ blnStatus: true })
+    Maestria.find({ blnDisponible: true })
         .exec((err, maestrias) => {
             if (err) {
                 return res.status(400).json({
@@ -14,10 +16,28 @@ app.get('/obtener', (req, res) => {
             }
             return res.status(200).json({
                 ok: true,
-                count: maestrias.length,
                 maestrias
             })
         });
+});
+
+//este get obtiene maestrias filtradas por un id
+app.get('/obtener/:id', (req, res) => {
+
+    Maestria.findById({ blnDisponible: true, _id: req.params.id }).then((maestria) => {
+
+        return res.status(200).json({
+            msg: 'Licenciatura consultada',
+            maestria
+        });
+
+    }).catch((err) => {
+        return res.status(500).json({
+            msg: 'Error al obtener la licenciatura de la DB.',
+            err
+        });
+    });
+
 });
 app.post('/registrar', (req, res) => {
     let body = req.body;
@@ -61,7 +81,7 @@ app.put('/actualizar/:id', (req, res) => {
 app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
-    Maestria.findByIdAndUpdate(id, { blnStatus: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
+    Maestria.findByIdAndUpdate(id, { blnDisponible: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
