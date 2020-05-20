@@ -4,6 +4,7 @@ const { verificaToken } = require('../../middlewares/autenticacion');
 const periodo = require('../../models/periodo');
 const app = express();
 
+//obtener periodos
 app.get('/obtener', (req, res) => {
     periodo.find({ blnEstado: true })
         .exec((err, periodos) => {
@@ -20,6 +21,7 @@ app.get('/obtener', (req, res) => {
             });
         });
 });
+//obtener periodos por id
 app.get('/obtener/:id', (req, res) => {
     let id = req.params.id;
     periodo.find({ blnEstado: true, _id: id })
@@ -39,6 +41,7 @@ app.get('/obtener/:id', (req, res) => {
         });
 });
 
+//registrar periodo de convocatorias
 app.post('/registrar', (req, res) => {
     let body = req.body;
     let Periodo = new periodo({
@@ -57,7 +60,7 @@ app.post('/registrar', (req, res) => {
         });
     });
 });
-
+//actualizar periodo de convocatorias
 app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['strPeriodo']);
@@ -75,7 +78,7 @@ app.put('/actualizar/:id', (req, res) => {
 
     });
 });
-
+//eliminar periodo de convocatoria
 app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 

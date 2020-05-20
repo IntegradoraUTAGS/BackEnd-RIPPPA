@@ -3,6 +3,7 @@ const app = express();
 const _ = require('underscore');
 const Convocatoria = require('../../models/convocatoria');
 
+//obtener convocatorias
 app.get('/convocatoria', (req, res) => {
     Convocatoria.find()
         .exec((err, ) => {
@@ -19,6 +20,7 @@ app.get('/convocatoria', (req, res) => {
             })
         });
 });
+//agregar convocatoria
 app.post('/convocatoria', (req, res) => {
     let body = req.body;
 
@@ -30,8 +32,6 @@ app.post('/convocatoria', (req, res) => {
         strTurno: body.strTurno,
         numHoras: body.numHoras
     });
-
-
     convocatoria.save((err, conDB) => {
         if (err) {
             return res.status(400).json({
@@ -45,6 +45,7 @@ app.post('/convocatoria', (req, res) => {
         });
     });
 });
+//actualizar convocatoria
 app.put('/convocatoria/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['idDireccion', ' idProfesor', ' idAcademia', ' idPeriodo', 'strTurno', ' numHoras']);
@@ -63,6 +64,7 @@ app.put('/convocatoria/:id', (req, res) => {
         }
     });
 });
+//Eliminar convocatoria
 app.delete('/convocatoria/:id', (req, res) => {
     let id = req.params.id;
 

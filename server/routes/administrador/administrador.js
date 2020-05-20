@@ -5,7 +5,7 @@ const _ = require('underscore');
 const app = express();
 const bcrypt = require('bcrypt');
 
-
+//obtener administradors activos
 app.get('/obtener', (req, res) => {
     Administrador.find({ blnEstado: true }).populate('idRol').populate('idDireccion')
         .exec((err, administradores) => {
@@ -22,6 +22,8 @@ app.get('/obtener', (req, res) => {
             });
         });
 });
+
+//obtener administrador por id 
 app.get('/obtener/:id', (req, res) => {
     let id = req.params.id;
     Administrador.find({ _id: id }).populate('idRol').populate('idDireccion')
@@ -40,6 +42,8 @@ app.get('/obtener/:id', (req, res) => {
             });
         });
 });
+
+//registrar administradores
 app.post('/registrar', (req, res) => {
     let body = req.body;
     let administrador = new Administrador({
@@ -63,6 +67,8 @@ app.post('/registrar', (req, res) => {
         });
     });
 });
+
+//actualizar administradores
 app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['idRol', 'idDireccion', 'strNombre', 'numCodigoEmpleado', 'strContrasenia', 'blnEstado']);
@@ -81,6 +87,8 @@ app.put('/actualizar/:id', (req, res) => {
 
     });
 });
+
+//eliminar administradores
 app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
@@ -98,6 +106,7 @@ app.delete('/eliminar/:id', (req, res) => {
     });
 });
 
+//funcion para iniciar sesion
 app.post('/login', (req, res) => {
     let body = req.body;
 
