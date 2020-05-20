@@ -4,6 +4,7 @@ const { verificaToken } = require('../../middlewares/autenticacion');
 const statusConvocatoria = require('../../models/statusConvocatoria');
 const app = express();
 
+//obtener status de convocatoria
 app.get('/obtener', (req, res) => {
     statusConvocatoria.find({ blnEstado: true })
         .exec((err, convocatorias) => {
@@ -21,6 +22,7 @@ app.get('/obtener', (req, res) => {
             });
         });
 });
+//obtener status de convocatoria por id 
 app.get('/obtener/:id', (req, res) => {
     let id = req.params.id;
     statusConvocatoria.find({ blnEstado: true, _id: id }) //select * from usuario where estado=true
@@ -40,7 +42,7 @@ app.get('/obtener/:id', (req, res) => {
             });
         });
 });
-
+//registrar status de convocatoria
 app.post('/registrar', (req, res) => {
     let body = req.body;
     let sConvocatoria = new statusConvocatoria({
@@ -59,7 +61,7 @@ app.post('/registrar', (req, res) => {
         });
     });
 });
-
+//actualizar status de convocatoria
 app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['strStatus']);
@@ -77,7 +79,7 @@ app.put('/actualizar/:id', (req, res) => {
 
     });
 });
-
+//eliminar status de convocatorias
 app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 

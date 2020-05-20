@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
+const Direccion = require('../models/direccion')
 const uniqueValidator = require('mongoose-unique-validator');
-const Direccion = require('./direccion');
-const RequisitoIndispensable = require('./requisitoIndispensable');
-const RequisitoDeseable = require('./requisitoDeseable');
-const Administrador = require('./administrador');
+
 
 let Schema = mongoose.Schema;
 
@@ -12,29 +10,17 @@ let academiaSchema = new Schema({
     idDireccion: {
         type: Schema.Types.ObjectId,
         ref: 'Direccion',
-        required: true
+        required: [true, 'Favor de ingresar el id de direccion']
     },
-    strNombreAcademia: {
+    strNombre: {
         type: String,
         required: [true, 'Porfavor ingresar el nombre de la academia']
     },
-    strEstadoCivil: {
-        type: String,
-        required: [true, 'Es necesario ingresar el estado civil']
-    },
-    numEdad: {
-        type: Number,
-        required: [true, 'Es necesario que ingrese su edad']
-    },
-
-    aJsnRequisitosIndispensables: [RequisitoIndispensable.schema],
-
-    aJsnRequisitosDeseables: [RequisitoDeseable.schema],
-
-    blnEstado: {
+    blnDisponible: {
         type: Boolean,
         default: true
     }
+
 });
 
 academiaSchema.plugin(uniqueValidator, {

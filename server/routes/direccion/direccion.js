@@ -4,6 +4,7 @@ const { verificaToken } = require('../../middlewares/autenticacion');
 const Direcciones = require('../../models/direccion');
 const app = express();
 
+//obtener direcciones disponibles
 app.get('/obtener', (req, res) => {
     Direcciones.find({ blnDisponible: true }).exec((err, direcciones) => {
         if (err) {
@@ -19,6 +20,7 @@ app.get('/obtener', (req, res) => {
         });
     });
 });
+//obtener direccion por id
 app.get('/obtener/:id', (req, res) => {
     let id = req.params.id;
     Direcciones.findById({ blnDisponible: true, _id: id })
@@ -29,21 +31,17 @@ app.get('/obtener/:id', (req, res) => {
                     err
                 });
             }
-
             return res.status(200).json({
                 ok: true,
                 dir
             });
-
-
         });
-
 });
-
+//registrar direcciones
 app.post('/registrar', (req, res) => {
     let body = req.body;
     let direcciones = new Direcciones({
-        strNombre: body.strNombre,
+        strNombre: body.strNombre
     });
     direcciones.save((err, dirDB) => {
         if (err) {
@@ -58,7 +56,7 @@ app.post('/registrar', (req, res) => {
         });
     });
 });
-
+//actualizar direccion
 app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['strNombre']);
@@ -73,10 +71,10 @@ app.put('/actualizar/:id', (req, res) => {
             ok: true,
             dirDB
         });
-
     });
 });
 
+//eliminar direccion
 app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 

@@ -3,7 +3,7 @@ const _ = require('underscore');
 const { verificaToken } = require('../../middlewares/autenticacion');
 const menu = require('../../models/menu');
 const app = express();
-
+//Este get obtiene menus activos
 app.get('/obtener', (req, res) => {
     menu.find({ blnEstado: true })
         .exec((err, menus) => {
@@ -21,18 +21,17 @@ app.get('/obtener', (req, res) => {
             });
         });
 });
+//Obtener menu por id
 app.get('/obtener/:id', (req, res) => {
     let id = req.params.id;
-    menu.find({ blnEstado: true, _id: id }) //select * from usuario where estado=true
-        //solo aceptan valores numericos
-        .exec((err, menus) => { //ejecuta la funcion
+    menu.find({ blnEstado: true, _id: id })
+        .exec((err, menus) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
                     err
                 });
             }
-
             return res.status(200).json({
                 ok: true,
                 count: menus.length,
@@ -40,7 +39,7 @@ app.get('/obtener/:id', (req, res) => {
             });
         });
 });
-
+//este post registra menus
 app.post('/registrar', (req, res) => {
     let body = req.body;
     let Menu = new menu({
@@ -59,7 +58,7 @@ app.post('/registrar', (req, res) => {
         });
     });
 });
-
+//este put actualiza menus
 app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['strMenus']);
@@ -77,7 +76,7 @@ app.put('/actualizar/:id', (req, res) => {
 
     });
 });
-
+//Este delete elimina menus
 app.delete('/eliminar/:id', (req, res) => {
     let id = req.params.id;
 
