@@ -11,7 +11,8 @@ app.use('/periodo', require('./periodo/periodo'));
 app.use('/academias', require('./academias/academias'));
 app.use('/rol', require('./rol/rol'));
 app.use('/comentario', require('./comentario/comentario'));
-app.use('/convocatoria', require('./convocatoria/convocatoria'))
+app.use('/convocatoria', require('./convocatoria/convocatoria'));
+app.use('/perfil', require('./perfiles/perfil'));
 
 
 module.exports = app;
