@@ -7,11 +7,6 @@ const Direccion = require('./direccion');
 let Schema = mongoose.Schema;
 
 let administradorSchema = new Schema({
-    idRol: {
-        type: Schema.Types.ObjectId,
-        ref: 'Rol',
-        required: [true, 'Favor de ingresar el rol del administrador']
-    },
     idDireccion: {
         type: Schema.Types.ObjectId,
         ref: 'Direccion',
@@ -25,7 +20,15 @@ let administradorSchema = new Schema({
         type: Number,
         required: [true, 'Por favor ingresar el codigo de empleado'],
         unique: true
-
+    },
+    strCorreo: {
+        type: String,
+        required: [true, 'Por favor ingresar el correo electronico'],
+        unique: true
+    },
+    numTelefono: {
+        type: Number,
+        required: [true, 'Favor de ingresar el numero de telefono']
     },
     strContrasenia: {
         type: String,

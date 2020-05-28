@@ -61,7 +61,7 @@ app.post('/registrar', (req, res) => {
 //actualizar academia
 app.put('/actualizar/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['strNombre']);
+    let body = _.pick(req.body, ['strNombre', 'idDireccion']);
     Academias.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, acaDB) => {
         if (err) {
             return res.status(400).json({

@@ -11,11 +11,10 @@ let RolSchema = new Schema({
         required: [true, 'Se debe de ingresar un rol']
     },
 
-    idMenu: {
-        type: Schema.Types.ObjectId,
-        ref: 'Menu',
-        required: [true, 'Favor de ingresar el id de un menu']
-    },
+    strMenu: [{
+        type: String,
+        required: [true, 'Favor de ingresar los menus']
+    }],
 
     blnEstado: {
         type: Boolean,
